@@ -1,20 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
+import type { SelectProps } from '../model/types';
 import './select.scss';
-
-interface SelectOption {
-    value: string;
-    label: string;
-    icon?: React.ReactNode;
-}
-
-interface SelectProps {
-    options: SelectOption[];
-    value?: string;
-    onChange: (value: string) => void;
-    placeholder?: string;
-}
 
 const Select = ({ options, value, onChange, placeholder = "Выберите..." }: SelectProps) => {
     const [isOpen, setIsOpen] = useState(false);

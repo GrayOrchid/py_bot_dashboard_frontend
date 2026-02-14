@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { Select } from '@/shared/ui';
 import './langSwitcher.scss'
 
-export const LangSwitcher = () => {
+ const LangSwitcher = () => {
   const { i18n } = useTranslation();
 
   const languages = [
@@ -24,3 +24,5 @@ export const LangSwitcher = () => {
     </div>
   );
 };
+
+export default LangSwitcher
