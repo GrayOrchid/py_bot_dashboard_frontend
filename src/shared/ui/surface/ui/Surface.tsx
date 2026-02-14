@@ -6,24 +6,18 @@ const Surface = ({
     children,
     variant = 'raised',
     fullWidth = false,
-    centered = false,
     className,
-    onClick,
-    style
+    style,
+    ...props 
 }: SurfaceProps) => {
     return (
         <div
-            onClick={onClick}
-            className={clsx(
-                'surface-container',
-                variant,
-                { 'centered-content': centered },
-                className
-            )}
+            className={clsx('surface-container', variant, className)}
             style={{
-                width: fullWidth ? '100%' : 'auto',
+                ...(fullWidth ? { width: '100%' } : {}),
                 ...style
             }}
+            {...props}
         >
             {children}
         </div>

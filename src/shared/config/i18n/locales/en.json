@@ -1,5 +1,8 @@
 {
   "auth": {
-    "title": "Use for authorization"
+    "authFormTitle": "Use for authorization",
+    "loginwithDiscord":"Login with Discord",
+    "authFormDescription":"Select a sign-in method"
   }
 }
+
