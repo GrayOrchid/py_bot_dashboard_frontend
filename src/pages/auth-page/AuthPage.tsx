@@ -1,11 +1,10 @@
 import './authPage.scss'
-import { LangSwitcher } from '@/features'
-import { AuthForm } from '@/widgets'
+import { AppearanceSettings, AuthForm } from '@/widgets'
 
 const AuthPage = ()=>{
     return(
         <div className="auth-page">
-            <LangSwitcher/>
+            <AppearanceSettings/>
             <AuthForm/>
         </div>
     )
