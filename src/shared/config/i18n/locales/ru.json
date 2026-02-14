@@ -3,5 +3,9 @@
     "authFormTitle": "Используйте для авторизации",
     "loginwithDiscord":"Войдите с помощью Discord",
     "authFormDescription":"Выберите способ входа"
+  },
+  "theme":{
+    "darkTheme":"Темная тема",
+    "lightTheme":"Светлая тема"
   }
 }

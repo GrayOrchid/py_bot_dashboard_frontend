@@ -1,16 +1,19 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import type { SelectProps } from '../model/types';
 import './select.scss';
+import { useClickOutside } from '@/shared/lib/hooks';
 
 const Select = ({ options, value, onChange, placeholder = "Выберите..." }: SelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const selectedOption = options.find(opt => opt.value === value);
+    const selectRef = useRef<HTMLDivElement>(null);
 
+    useClickOutside(selectRef, () => setIsOpen(false));
 
     return (
-        <div className="select-container">
+        <div className="select-container" ref={selectRef}>
             <button
                 type="button"
                 className="select-trigger"

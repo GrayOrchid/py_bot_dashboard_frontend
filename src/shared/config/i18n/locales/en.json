@@ -3,6 +3,10 @@
     "authFormTitle": "Use for authorization",
     "loginwithDiscord":"Login with Discord",
     "authFormDescription":"Select a sign-in method"
+  },
+  "theme":{
+    "darkTheme":"Dark theme",
+    "lightTheme":"Light theme"
   }
 }
 

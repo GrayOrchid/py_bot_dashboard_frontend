@@ -5,6 +5,39 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>discord_bot_dashboard-front</title>
+
+    <style>
+      :root {
+        --bg-color: #e7ddcc; 
+      }
+      [data-theme="dark"] {
+        --bg-color: #121212; 
+      }
+      body {
+        background-color: var(--bg-color);
+        margin: 0;
+      }
+    </style>
+
+    <script>
+      (function() {
+        try {
+          const storageKey = "theme-storage"; 
+          const storage = localStorage.getItem(storageKey);
+
+          if (storage) {
+            const parsed = JSON.parse(storage);
+            const theme = parsed.state?.theme;
+            
+            if (theme) {
+              document.documentElement.setAttribute("data-theme", theme);
+            }
+          }
+        } catch (e) {
+          console.error("Theme script failed:", e);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
