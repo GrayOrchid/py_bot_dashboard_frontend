@@ -1,6 +1,6 @@
-import { LangSwitcher } from '@/features'
 import './authPage.scss'
-import { AuthForm } from "@/widgets"
+import { LangSwitcher } from '@/features'
+import { AuthForm } from '@/widgets'
 
 const AuthPage = ()=>{
     return(

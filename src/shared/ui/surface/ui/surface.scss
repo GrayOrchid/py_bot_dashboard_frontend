@@ -6,21 +6,15 @@
   position: relative;
   
   &.raised {
-    box-shadow: 8px 8px 16px var(--shadow-dark), -8px -8px 16px var(--shadow-light);
+    @include neumorphic-raised(8px, 16px);
     
     &:hover {
       transform: translateY(-1px);
-      box-shadow: 10px 10px 20px var(--shadow-dark), -10px -10px 20px var(--shadow-light);
+      @include neumorphic-raised(10px, 20px); 
     }
   }
 
   &.inset {
-    box-shadow: inset 6px 6px 12px var(--shadow-dark), inset -6px -6px 12px var(--shadow-light);
-  }
-
-  &.centered-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include neumorphic-inset(6px, 12px);
   }
 }

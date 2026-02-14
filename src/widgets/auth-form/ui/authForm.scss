@@ -1,0 +1,44 @@
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  min-width: 320px; 
+  margin: 0 auto;
+  padding: 2.5rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &__header {
+        text-align: center;
+        
+        h1 {
+            margin: 0;
+            font-size: 20px;
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        p {
+            margin-top: 10px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+    }
+
+    &__actions {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem; 
+    }
+
+    &__footer {
+        text-align: center;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        opacity: 0.8;
+    }
+}
+

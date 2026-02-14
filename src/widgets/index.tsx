@@ -1,1 +1,1 @@
-export {default as AuthForm} from './auth-form/AuthForm'
+export * from './auth-form/index'
