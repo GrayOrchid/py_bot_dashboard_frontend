@@ -1,4 +1,4 @@
-import { Suspense, type ReactNode,  } from "react";
+import { type ReactNode, } from "react";
 import "@/shared/config/index";
 
 interface ProvidersProps {
@@ -6,9 +6,5 @@ interface ProvidersProps {
 }
 
 export const AppProvider = ({ children }: ProvidersProps) => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-       {children}
-    </Suspense>
-  );
+  return <>{children}</>
 };

@@ -1,7 +1,7 @@
 import './authPage.scss'
 import { AppearanceSettings, AuthForm } from '@/widgets'
 
-const AuthPage = ()=>{
+export const AuthPage = ()=>{
     return(
         <div className="auth-page">
             <AppearanceSettings/>
@@ -10,4 +10,3 @@ const AuthPage = ()=>{
     )
 }
 
-export default AuthPage
