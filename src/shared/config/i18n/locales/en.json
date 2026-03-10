@@ -7,6 +7,9 @@
   "theme":{
     "darkTheme":"Dark theme",
     "lightTheme":"Light theme"
+  },
+  "input":{
+    "HTMLCode":""
   }
 }
 
