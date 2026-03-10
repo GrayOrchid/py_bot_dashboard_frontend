@@ -1,0 +1,115 @@
+@use "@/shared/styles/variables" as *;
+
+.ui-input-root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 14px; // Отступ сверху для поднятого лейбла
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__field {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+    outline: none;
+    font-size: 16px;
+    transition: border-color var(--transition), box-shadow var(--transition);
+
+    // Хаки для анимации: плейсхолдер должен быть, но невидимым
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:focus {
+      border-color: var(--primary);
+    }
+  }
+
+  &__label {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    background-color: var(--surface);
+    padding: 0 6px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 500;
+    pointer-events: none;
+    z-index: 1;
+    
+    // Плавность всех изменений
+    will-change: transform, font-size, color;
+    transition: 
+      transform var(--transition), 
+      font-size var(--transition), 
+      color var(--transition),
+      background-color var(--transition);
+  }
+
+  // --- ЛОГИКА АНИМАЦИИ ЛЕЙБЛА ---
+
+  // 1. ПОЗИЦИЯ: Поднимаем, если есть фокус ИЛИ введено значение
+  &__field:focus + &__label,
+  &__field:not(:placeholder-shown) + &__label {
+    transform: translateY(-38px) scale(0.85);
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  // 2. ЦВЕТ: Красим в фиолетовый ТОЛЬКО при активном фокусе
+  &__field:focus + &__label {
+    color: var(--primary);
+  }
+
+  // 3. ЦВЕТ ПРИ ПОТЕРЕ ФОКУСА: Если текст остался, возвращаем серый цвет
+  &__field:not(:focus):not(:placeholder-shown) + &__label {
+    color: var(--text-secondary);
+  }
+
+  // --- СОСТОЯНИЯ ОШИБКИ (Priority) ---
+  &--error {
+    .ui-input-root__field {
+      border-color: #ef4444 !important;
+      
+      &:focus {
+        box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      }
+    }
+
+    .ui-input-root__label {
+      color: #ef4444 !important;
+    }
+  }
+
+  &__error-message {
+    font-size: 12px;
+    color: #ef4444;
+    margin-top: 6px;
+    margin-left: 4px;
+    font-weight: 600;
+    animation: slideIn 0.2s ease-out;
+  }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-5px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}

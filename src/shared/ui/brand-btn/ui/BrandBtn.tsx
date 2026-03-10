@@ -3,12 +3,11 @@ import './brandBtn.scss';
 import type { BrandButtonProps } from '../model/types';
 
 export const BrandBtn = ({
-    brand,
-    icon,
-    children,
-    fullWidth = false, 
-    ...props
-}: BrandButtonProps) => {
+brand,
+icon,
+children,
+fullWidth = false, 
+...props}: BrandButtonProps) => {
     return (
         <button
             className={clsx(
