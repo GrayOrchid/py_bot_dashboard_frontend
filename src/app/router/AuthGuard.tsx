@@ -1,10 +1,11 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useLocalStorage } from "@/shared/lib/hooks";
 
 export const AuthGuard = () => {
-  const isAuth = !!localStorage.getItem('auth_token');
+  const [token] = useLocalStorage('auth_token', null);
   const location = useLocation();
 
-  if (!isAuth) {
+  if (!token) {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
