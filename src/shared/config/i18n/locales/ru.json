@@ -1,8 +1,7 @@
 {
   "auth": {
-    "authFormTitle": "Используйте для авторизации",
-    "loginwithDiscord":"Войдите с помощью Discord",
-    "authFormDescription":"Выберите способ входа"
+    "authFormTitle": "Добро пожаловать",
+    "loginWithMail":"Введите почту, чтобы получить код доступа"
   },
   "theme":{
     "darkTheme":"Темная тема",
@@ -12,6 +11,18 @@
     "XSSSCript":"Скрипт запрещен",
     "isEmpty":"Поле не может быть пустым",
     "invalidMail":"Неверный email",
-    "onlyNumbers":"Только цифры"
+    "onlyNumbers":"Только цифры",
+    "EMail":"Электронная почта",
+    "OTPCode":"Код подтверждения"
+  },
+  "form":{
+    "getCode":"Получить код",
+    "logIn":"Войти",
+    "changeEmail":"Изменить почту",
+    "accept":"Подтверждение",
+    "sendedCode":"Мы отправили код на"
+  },
+  "providers":{
+    "loginwithDiscord":"Введите почту, чтобы получить код доступа"
   }
 }

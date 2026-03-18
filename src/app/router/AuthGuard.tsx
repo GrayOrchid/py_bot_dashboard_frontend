@@ -1,7 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useIsAuth } from "@/entities/session"; 
 
 export const AuthGuard = () => {
-  const isAuth = !!localStorage.getItem('auth_token');
+  const isAuth = useIsAuth(); 
   const location = useLocation();
 
   if (!isAuth) {

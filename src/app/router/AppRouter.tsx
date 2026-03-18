@@ -13,14 +13,9 @@ const DashboardPage = lazy(() =>
     import("@pages/dashboard-page").then(m => ({ default: m.DashboardPage }))
 );
 
-const PageLoader = () => (
-    <div className="h-screen w-full flex items-center justify-center text-gray-500 font-sans">
-        Загрузка...
-    </div>
-);
 
 const SuspenseLayout = () => (
-    <Suspense fallback={<PageLoader />}>
+    <Suspense >
         <Outlet />
     </Suspense>
 );

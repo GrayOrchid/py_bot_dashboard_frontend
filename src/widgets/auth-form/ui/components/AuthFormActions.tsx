@@ -1,18 +1,14 @@
-import { useInput } from "@/shared/lib/hooks"; 
-import { Input } from "@/shared/ui";
+import { useSessionStore } from "@/entities/session";
+import AuthByOtp from "@/features/auth-by-otp/ui/AuthByOTP";
+import AuthByEmail from "@/features/auth-by-email/ui/AuthByEmail"; 
 
 export const AuthFormActions = () => {
-  const emailField = useInput('', { isEmpty: true, isEmail: true });
+  const step = useSessionStore((state) => state.step);
 
   return (
-    <div className="auth-actions">
-      <Input
-        label="Электронная почта"
-        placeholder="example@mail.com"
-        hookProps={emailField} 
-        type="email"
-      />
-      
+    <div className="auth-form__actions">
+      {step === 'email' && <AuthByEmail />}
+      {step === 'otp' && <AuthByOtp />}
     </div>
   );
 };

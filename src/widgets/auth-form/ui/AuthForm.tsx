@@ -1,6 +1,6 @@
 import './authForm.scss';
 import { Surface } from '@/shared/ui';
-import { AuthFormActions, AuthFormHeader } from './components';
+import { AuthFormActions, AuthFormHeader, AuthFormMail } from './components';
 
 const AuthForm = () => {
 
@@ -8,6 +8,7 @@ const AuthForm = () => {
         <Surface variant="raised" className="auth-card">
             <div className="auth-form">
                 <AuthFormHeader/>
+                <AuthFormMail/>
                 <AuthFormActions/>
             </div>
         </Surface>
@@ -15,3 +16,6 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+
+
+// .ТАК ЖЕ ПЕРЕДАПТЬ ВМЕСТЕ С МАИЛОМ ВЫБРАННЫЙ ЯЗЫК
