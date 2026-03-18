@@ -5,7 +5,7 @@ export const AuthGuard = () => {
   const isAuth = useIsAuth(); 
   const location = useLocation();
 
-  if (!isAuth) {
+  if (!token) {
     return <Navigate to="/auth" state={{ from: location }} replace />;
   }
 
