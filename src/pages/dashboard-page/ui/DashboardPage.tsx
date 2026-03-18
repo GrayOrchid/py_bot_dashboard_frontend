@@ -1,66 +1,26 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import './dashboardPage.scss';
-
-interface UserData {
-    username: string;
-    avatar?: string;
-    id: string;
-}
+import { useEffect } from 'react';
+import { useUser, sessionActions, useIsAuth } from '@/entities/session';
 
 export const DashboardPage = () => {
-    const [user, setUser] = useState<UserData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+  const user = useUser(); 
+  const isAuth = useIsAuth();
 
-    useEffect(() => {
-        const fetchMe = async () => {
-            try {
-                const token = localStorage.getItem('auth_token');
+  useEffect(() => {
+    if (isAuth) {
+      sessionActions.refreshUser();
+    }
+  }, [isAuth]);
 
-                if (!token) {
-                    setError('Токен не найден');
-                    setLoading(false);
-                    return;
-                }
+  if (!user) return <div>Загрузка профиля...</div>;
 
-                const response = await axios.get('http://127.0.0.1:8000/api/users/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-
-                setUser(response.data);
-            } catch (err: any) {
-                console.error('Ошибка при получении данных пользователя:', err);
-                setError(err.response?.data?.detail || 'Не удалось загрузить данные');
-                
-                if (err.response?.status === 401) {
-                    localStorage.removeItem('auth_token');
-                    window.location.href = '/';
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchMe();
-    }, []);
-
-    if (loading) return <div className="loader">Загрузка профиля...</div>;
-    if (error) return <div className="error-msg">{error}</div>;
-
-    return (
-        <div className="dashboard-container">
-            <h1>Dashboard</h1>
-            {user && (
-                <div className="user-card">
-                    <h2>Привет, {user.username}!</h2>
-                    <p>Твой ID: {user.id}</p>
-                    {user.avatar && <img src={user.avatar} alt="avatar" />}
-                </div>
-            )}
-        </div>
-    );
+  return (
+    <div className="dashboard">
+      <h1>Панель управления</h1>
+      <div className="profile-info">
+        <p>Email: {user.email}</p>
+        <p>ID: {user.id}</p>
+      </div>
+      <button onClick={sessionActions.logout}>Выйти</button>
+    </div>
+  );
 };
-

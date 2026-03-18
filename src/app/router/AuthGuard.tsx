@@ -1,8 +1,8 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import { useLocalStorage } from "@/shared/lib/hooks";
+import { useIsAuth } from "@/entities/session"; 
 
 export const AuthGuard = () => {
-  const [token] = useLocalStorage('auth_token', null);
+  const isAuth = useIsAuth(); 
   const location = useLocation();
 
   if (!token) {

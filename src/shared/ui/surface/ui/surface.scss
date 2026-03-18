@@ -8,10 +8,6 @@
   &.raised {
     @include neumorphic-raised(8px, 16px);
     
-    &:hover {
-      transform: translateY(-1px);
-      @include neumorphic-raised(10px, 20px); 
-    }
   }
 
   &.inset {

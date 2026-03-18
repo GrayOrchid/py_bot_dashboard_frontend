@@ -1,4 +1,5 @@
-import { type ReactNode, } from "react";
+import { type ReactNode, useEffect } from "react";
+import { useIsAuth, sessionActions } from "@/entities/session";
 import "@/shared/config/index";
 
 interface ProvidersProps {
@@ -6,5 +7,13 @@ interface ProvidersProps {
 }
 
 export const AppProvider = ({ children }: ProvidersProps) => {
-  return <>{children}</>
+  const isAuth = useIsAuth();
+
+  useEffect(() => {
+    if (isAuth) {
+      sessionActions.refreshUser();
+    }
+  }, []);
+
+  return <>{children}</>;
 };

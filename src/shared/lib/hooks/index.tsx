@@ -1,3 +1,4 @@
 export * from './useClickOutside'
-export * from './usePopupAuth'
-export * from './useLocaleStorage'
+export * from './useDiscordAuth'
+export * from './useInput'
+export * from './useHotkeys'

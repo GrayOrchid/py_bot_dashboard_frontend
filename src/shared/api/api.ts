@@ -1,27 +1,25 @@
 import axios from 'axios';
-
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api/';
+import { useSessionStore } from '@/entities/session';
 
 export const $api = axios.create({
-    baseURL: BASE_URL,
-    timeout: 5000, 
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    },
-    // withCredentials: true, 
+    baseURL: 'http://127.0.0.1:8000/api',
 });
 
 $api.interceptors.request.use((config) => {
-    console.log(`🚀 [API] ${config.method?.toUpperCase()} -> ${config.url}`);
+    const token = useSessionStore.getState().token;
+
+    if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+
     return config;
 });
 
 $api.interceptors.response.use(
     (response) => response,
     (error) => {
-        const message = error.response?.data?.detail || error.message;
-        console.error(`❌ [API Error]: ${message}`);
+        if (error.response?.status === 401) {
+        }
         return Promise.reject(error);
     }
 );

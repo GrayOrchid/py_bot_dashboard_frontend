@@ -1,0 +1,1 @@
+export {default as AuthByOtp} from './ui/AuthByOTP'
