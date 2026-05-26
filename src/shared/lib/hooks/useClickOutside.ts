@@ -3,9 +3,14 @@ import { useEffect } from 'react';
 export const useClickOutside = (ref: React.RefObject<HTMLElement | null>, handler: () => void) => {
     useEffect(() => {
         const listener = (event: MouseEvent | TouchEvent) => {
-            if (!ref.current || ref.current.contains(event.target as Node)) {
+            const target = event.target as Node;
+            if (!ref.current) return;
+            if (!document.contains(target)) return;
+
+            if (ref.current.contains(target)) {
                 return;
             }
+
             handler();
         };
 

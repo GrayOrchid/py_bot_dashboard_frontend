@@ -4,7 +4,7 @@ import type { SessionState } from './types';
 
 export const useSessionStore = create<SessionState>()(
     persist(
-        (set) => ({
+        (_set) => ({
             step: 'email',
             token: null,
             email: null,

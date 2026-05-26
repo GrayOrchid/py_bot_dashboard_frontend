@@ -1,4 +1,5 @@
 .auth-by-email {
+    @include flex-center($direction: column, $items: initial);
     &__button {
         margin-top: 30px;
     }

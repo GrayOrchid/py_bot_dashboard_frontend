@@ -2,11 +2,28 @@
   position: relative;
   width: 100%;
   min-width: 200px;
-  
+
   ul {
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+
+  .select-arrow {
+    display: flex;
+    transition: transform 0.2s ease-out;
+  }
+
+  &.is-open {
+    .select-arrow {
+      transform: rotate(180deg);
+    }
+
+    .select-dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
   }
 }
 
@@ -47,6 +64,13 @@
   padding: 6px;
   z-index: 100;
   overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px) scale(0.95);
+  transition: 
+  opacity 0.2s ease-out, 
+  transform 0.2s ease-out, 
+  visibility 0.2s;
 }
 
 .select-option {
@@ -66,7 +90,7 @@
   &:hover {
     background: var(--bg);
     color: var(--primary);
-    padding-left: 16px; 
+    padding-left: 16px;
   }
 
   &.selected {
@@ -79,5 +103,5 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  font-style: normal; 
+  font-style: normal;
 }

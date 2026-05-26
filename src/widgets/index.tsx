@@ -1,2 +1,3 @@
-export * from './auth-form/index'
-export * from './appearance-settings/index'
+export * from './auth-form'
+export * from './sidebar'
+export * from './discord-connector'

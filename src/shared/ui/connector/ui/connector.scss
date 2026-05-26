@@ -1,0 +1,47 @@
+.connector__header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.connector__status-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.connector__label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-secondary);   
+    opacity: 0.6;
+}
+
+.connector__name {
+    font-size: 20px;
+    font-weight: 900;
+    line-height: 1.2;
+    height: 1.2em; 
+    width: 100%;      
+    max-width: 180px;  
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    color: var(--text);
+    margin: 4px 0 0 0;
+    
+    &:empty::before {
+        content: '\00a0';
+    }
+}
+
+.connector__actions {
+    margin-top: auto;
+}
+.connector__connected-actions{
+      @include flex-center(_, space-between, center);
+}

@@ -1,13 +1,13 @@
 import * as api from '../api/session.api';
 import { setSession, useSessionStore } from './session.store';
-import type { AuthStep } from './types';
+import type { AuthStep, User } from './types';
 
 export const sessionActions = {
     requestLoginCode: async (email: string) => {
         setSession({ isLoading: true });
         const lang = localStorage.getItem('i18nextLng') || 'ru';
 
-        try {            
+        try {
             await api.sendOtp(email, lang);
             setSession({ email, step: 'otp' });
         } catch (error) {
@@ -26,11 +26,10 @@ export const sessionActions = {
 
     refreshUser: async () => {
         try {
-            const { data } = await api.getMe();
+            const { data } = await api.getMe<User>();
             setSession({ user: data });
-        } catch (error) {
-            console.error("Failed to refresh user", error);
-            if ((error as any).response?.status === 401) {
+        } catch (error: any) {
+            if (error.response?.status === 401) {
                 sessionActions.logout();
             }
         }
@@ -43,11 +42,11 @@ export const sessionActions = {
         setSession({ isLoading: true });
         try {
             const { data } = await api.verifyOtp(email, otp);
-
             setSession({
                 token: data.access_token,
                 user: data.user,
-                isAuth: true
+                isAuth: true,
+                step: 'email',
             });
 
         } catch (error) {
@@ -57,8 +56,34 @@ export const sessionActions = {
             setSession({ isLoading: false });
         }
     },
+
     logout: () => {
-        setSession({ token: null, user: null, isAuth: false, email: null, step: 'email' });
+        setSession({
+            token: null,
+            user: null,
+            isAuth: false,
+            email: null,
+            step: 'email'
+        });
         useSessionStore.persist.clearStorage();
-    }
+    },
+
+    unlinkAccount: async (provider: string) => {
+        setSession({ isLoading: true });
+        console.log(provider);
+        
+        try {
+            const { data } = await api.unlinkProvider(provider);
+            if (data && typeof data === 'object') {
+                setSession({ user: data });
+            } else {
+                await sessionActions.refreshUser();
+            }
+        } catch (error) {
+            console.error(`[SessionActions] Failed to unlink ${provider}`, error);
+            throw error;
+        } finally {
+            setSession({ isLoading: false });
+        }
+    },
 };

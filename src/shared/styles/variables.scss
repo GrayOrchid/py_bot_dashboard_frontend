@@ -14,11 +14,15 @@
 
   --color-discord: #5865F2;
   --color-telegram: #24A1DE;
+  --color-success: #10b981; 
+  --color-error: #ef4444;   
+  --color-warning: #f59e0b;
+
 
   --radius: 8px;
   --transition: 0.2s ease;
 
- 
+  
 }
 
 [data-theme="dark"] {
@@ -37,4 +41,6 @@
 
   --color-discord: #7289DA; 
   --color-telegram: #2ea6da;
+  --color-success: #34d399; 
+  --color-error: #f87171;
 }
