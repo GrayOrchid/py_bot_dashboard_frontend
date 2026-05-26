@@ -1,0 +1,1 @@
+export {default as DiscordPage } from "./ui/DiscordPage";

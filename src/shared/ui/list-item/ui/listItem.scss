@@ -1,0 +1,74 @@
+@use '@/shared/styles/mixins' as *;
+
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin: 6px 4px;
+    border-radius: 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-decoration: none; // Для ссылок
+    color: inherit;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &--clickable {
+        cursor: pointer;
+        
+        &:hover {
+            transform: translateY(-1px);
+            @include neumorphic-raised(4px, 8px);
+        }
+
+        &:active {
+            transform: translateY(0);
+            @include neumorphic-inset(2px, 4px);
+        }
+    }
+
+    &__content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__icon {
+        display: flex;
+        align-items: center;
+        color: var(--primary);
+    }
+
+    &__label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+
+    &__right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    &__indicator {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        
+        &--active {
+            background-color: #10b981;
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+        }
+
+        &--inactive {
+            background-color: #ef4444;
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5);
+        }
+    }
+
+    &__action {
+        display: flex;
+        align-items: center;
+    }
+}

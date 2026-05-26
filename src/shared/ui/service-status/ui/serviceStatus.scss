@@ -1,0 +1,64 @@
+.service-status {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; 
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    &__label {
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        letter-spacing: 0.05em;
+        opacity: 0.8;
+    }
+
+    &__state {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+
+        &--connected {
+            color: var(--color-success); 
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(var(--color-success-rgb), 0.1);
+            border-radius: 20px;
+
+            &::before {
+                content: '';
+                width: 6px;
+                height: 6px;
+                border-radius: 50%;
+                background: currentColor;
+                box-shadow: 0 0 8px currentColor;
+            }
+        }
+    }
+
+    &__username {
+        font-size: 28px; 
+        font-weight: 900;
+        color: var(--text);
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+                overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    &__description {
+        font-size: 14px;
+        color: var(--text-secondary);
+        line-height: 1.5;
+        opacity: 0.7;
+    }
+}

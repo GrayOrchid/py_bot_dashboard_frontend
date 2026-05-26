@@ -1,8 +1,13 @@
 import { useEffect } from 'react';
-import { useUser, sessionActions, useIsAuth } from '@/entities/session';
+import { useTranslation } from 'react-i18next';
+import { sessionActions, useIsAuth } from '@/entities/session';
+import { DiscordConnector} from '@/widgets';
+import './dashboardPage.scss';
+import { DashboardWelcome } from './components';
+import { Divider } from '@/shared/ui';
 
 export const DashboardPage = () => {
-  const user = useUser(); 
+  const { t } = useTranslation();
   const isAuth = useIsAuth();
 
   useEffect(() => {
@@ -11,16 +16,25 @@ export const DashboardPage = () => {
     }
   }, [isAuth]);
 
-  if (!user) return <div>Загрузка профиля...</div>;
-
   return (
-    <div className="dashboard">
-      <h1>Панель управления</h1>
-      <div className="profile-info">
-        <p>Email: {user.email}</p>
-        <p>ID: {user.id}</p>
-      </div>
-      <button onClick={sessionActions.logout}>Выйти</button>
+    <div className="dashboard-layout">
+      <main className="dashboard-main">
+        <div className="dashboard-main__container">
+          <DashboardWelcome />
+          <section className="dashboard-content">
+            <Divider
+              align="center"
+              weight='2px'
+              fontSize='20px'
+            >
+              {t('home.services')}
+            </Divider>
+            <div className="dashboard-grid">
+              <DiscordConnector />
+            </div>
+          </section>
+        </div>
+      </main>
     </div>
   );
 };

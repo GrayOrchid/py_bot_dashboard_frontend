@@ -3,6 +3,7 @@ import { useSessionStore } from '@/entities/session';
 
 export const $api = axios.create({
     baseURL: 'http://127.0.0.1:8000/api',
+    withCredentials: true,
 });
 
 $api.interceptors.request.use((config) => {

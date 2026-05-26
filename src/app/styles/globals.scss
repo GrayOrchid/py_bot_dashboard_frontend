@@ -33,6 +33,13 @@ button {
   background: transparent;
   padding: 0;
   color: inherit;
+  font: inherit; 
+  outline: none; 
+  -webkit-tap-highlight-color: transparent;
+  &:focus-visible {
+    @include neumorphic-inset(2px, 4px);
+    opacity: 0.8;
+  }
 }
 
 h1, h2, h3 {

@@ -1,7 +1,11 @@
 {
+  "shared":{
+    "loading":"Загрузка..."
+  },
   "auth": {
     "authFormTitle": "Добро пожаловать",
-    "loginWithMail":"Введите почту, чтобы получить код доступа"
+    "loginWithMail":"Введите почту, чтобы получить код доступа",
+    "logout":"Выйти из аккаунта"
   },
   "theme":{
     "darkTheme":"Темная тема",
@@ -24,5 +28,18 @@
   },
   "providers":{
     "loginwithDiscord":"Введите почту, чтобы получить код доступа"
+  },
+  "connector": {
+    "statusConnected": "Аккаунт подключен",
+    "statusDisconnected": "Аккаунт не подключен",
+    "linkAccount":"Подключить аккаунт",
+    "go": "Перейти"
+  },
+  "sidebar":{
+    "services":"Ваши сервисы",
+    "user":"Аккаунт"
+  },
+  "home":{
+    "services":"Сервисы"
   }
 }

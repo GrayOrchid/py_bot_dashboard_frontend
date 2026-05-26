@@ -7,5 +7,8 @@ export const sendOtp = (email: string, lang: string) =>
 export const verifyOtp = (email: string, otp: string) => 
     $api.post<LoginResponse>('/auth/verify-otp', { email, otp });
 
-export const getMe = () => 
-    $api.get('/users/me');
+export const getMe =<T = any> () => 
+    $api.get<T>('/users/me');
+
+export const unlinkProvider = (provider: string) => 
+    $api.delete(`/users/me/accounts/${provider}`);

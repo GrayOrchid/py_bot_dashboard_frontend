@@ -16,6 +16,3 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
-
-
-// .ТАК ЖЕ ПЕРЕДАПТЬ ВМЕСТЕ С МАИЛОМ ВЫБРАННЫЙ ЯЗЫК

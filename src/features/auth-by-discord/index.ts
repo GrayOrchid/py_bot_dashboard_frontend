@@ -1,0 +1,1 @@
+export {default as AuthByDiscord } from './ui/AuthByDiscord'
