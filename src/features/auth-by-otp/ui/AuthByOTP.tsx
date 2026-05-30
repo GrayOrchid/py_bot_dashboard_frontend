@@ -1,42 +1,49 @@
 import './AuthByOtp.scss';
 import { useRef } from 'react';
-import { sessionActions, useSessionLoading } from "@/entities/session";
+import { useTranslation } from 'react-i18next';
+import { useVerifyOtpMutation, useAuthEmail, sessionActions } from "@/entities/session";
 import { useHotkeys, useInput } from "@/shared/lib/hooks";
 import { Input, Button } from "@/shared/ui";
-import { useTranslation } from 'react-i18next';
 
 const AuthByOtp = () => {
     const { t } = useTranslation();
 
+    const email = useAuthEmail();
+
+    const { mutate: verifyOtp, isPending } = useVerifyOtpMutation();
+
     const otpField = useInput('', { isEmpty: true, minLength: 6, onlyNumbers: true });
-    const isLoading = useSessionLoading();
 
     const submitRef = useRef<HTMLButtonElement>(null);
     const backRef = useRef<HTMLButtonElement>(null);
 
-    const handleLogin = async () => {
-        await sessionActions.login(otpField.value);
+    const handleLogin = () => {
+        if (otpField.isValid && email && !isPending) {
+            verifyOtp({ 
+                email, 
+                otp: otpField.value 
+            });
+        }
     };
 
     const handleBack = () => {
-        sessionActions.clearEmail();
+        if (!isPending) {
+            sessionActions.setStep('email');
+        }
     };
 
     useHotkeys([
         { key: 'Enter', ref: submitRef },
         { key: 'Escape', ref: backRef }
-    ], !isLoading);
+    ], !isPending);
 
     return (
-        <div
-            className="auth-by-otp"
-            tabIndex={-1}
-        >
+        <div className="auth-by-otp" tabIndex={-1}>
             <Input
                 label={t('input.OTPCode')}
-                placeholder="0000"
+                placeholder="000000" 
                 hookProps={otpField}
-                disabled={isLoading}
+                disabled={isPending}
                 type='number'
             />
             <div className="auth-by-otp__actions">
@@ -44,8 +51,8 @@ const AuthByOtp = () => {
                     ref={submitRef}
                     variant="primary"
                     onClick={handleLogin}
-                    isLoading={isLoading}
-                    disabled={!otpField.isValid}
+                    isLoading={isPending}
+                    disabled={!otpField.isValid || isPending}
                 >
                     {t('form.logIn')}
                 </Button>
@@ -53,7 +60,7 @@ const AuthByOtp = () => {
                     ref={backRef}
                     variant="link"
                     onClick={handleBack}
-                    disabled={isLoading}
+                    disabled={isPending}
                 >
                     {t('form.changeEmail')} (Esc)
                 </Button>

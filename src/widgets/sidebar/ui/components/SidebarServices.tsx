@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
 import { ListItem, Divider } from '@/shared/ui'; 
 import { MessageCircle, Send, ChevronRight } from 'lucide-react';
-import { useUser } from '@/entities/session';
+import { useIsAuth } from '@/entities/session';  
+import { useCurrentUser } from '@/entities/user'; 
 import type { JSX } from 'react';
 
 const SERVICE_CONFIG: Record<string, { icon: JSX.Element, path: string }> = {
@@ -17,7 +18,10 @@ const SERVICE_CONFIG: Record<string, { icon: JSX.Element, path: string }> = {
 
 const SidebarServices = () => {
     const { t } = useTranslation();
-    const user = useUser();
+    
+    const isAuth = useIsAuth();
+    
+    const { data: user } = useCurrentUser(isAuth);
 
     const services = user?.linked_accounts || [];
 
@@ -37,7 +41,7 @@ const SidebarServices = () => {
                         <ListItem
                             key={account.id}
                             as="li"
-                            to={`/discord`}
+                            to={config.path} 
                             label={account.display_name || account.provider}
                             icon={config.icon}
                             action={<ChevronRight size={14} className="text-secondary opacity-50" />}

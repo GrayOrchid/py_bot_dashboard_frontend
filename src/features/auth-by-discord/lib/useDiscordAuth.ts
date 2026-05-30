@@ -1,7 +1,10 @@
 import { useEffect, useState, useCallback, useRef } from "react";
-import { sessionActions } from "@/entities/session"; 
 
-export const useDiscordAuth = () => {
+interface UseDiscordAuthOptions {
+    onSuccess?: () => void;
+}
+
+export const useDiscordAuth = (options?: UseDiscordAuthOptions) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const timerRef = useRef<number | null>(null);
@@ -34,7 +37,7 @@ export const useDiscordAuth = () => {
     }, []);
 
     useEffect(() => {
-        const handleMessage = async (event: MessageEvent) => {
+        const handleMessage = (event: MessageEvent) => {
             const isAllowedOrigin =
                  event.origin === "http://127.0.0.1:8000" ||
                  event.origin === "http://localhost:8000";
@@ -47,13 +50,8 @@ export const useDiscordAuth = () => {
                     timerRef.current = null;
                 }
 
-                try {
-                    await sessionActions.refreshUser();
-                } catch (e) {
-                    setError("Ошибка обновления данных профиля");
-                } finally {
-                    setIsLoading(false);
-                }
+                setIsLoading(false);
+                options?.onSuccess?.();
             }
 
             if (event.data?.type === "AUTH_ERROR") {
@@ -71,7 +69,9 @@ export const useDiscordAuth = () => {
             window.removeEventListener("message", handleMessage);
             if (timerRef.current) clearInterval(timerRef.current);
         };
-    }, []);
+    }, [options]);
 
     return { login, isLoading, error };
 };
+
+

@@ -1,20 +1,29 @@
+
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import type { SessionState } from './types';
+import { persist, createJSONStorage } from 'zustand/middleware';
+import type { SessionState, SessionActions } from './types';
 
-export const useSessionStore = create<SessionState>()(
-    persist(
-        (_set) => ({
-            step: 'email',
-            token: null,
-            email: null,
-            isAuth: false,
-            isLoading: false,
-            user: null,
-        }),
-        { name: 'session-storage' }
-    )
+export const useSessionStore = create<SessionState & { actions: SessionActions }>()(
+  persist(
+    (set) => ({
+      step: 'email',
+      token: null,
+      email: null,
+      isAuth: false,
+      actions: {
+        setStep: (step) => set({ step }),
+        setEmail: (email) => set({ email }),
+        login: (token) => set({ token, isAuth: true, step: 'email', email: null }),
+        logout: () => {
+          set({ token: null, isAuth: false, email: null, step: 'email' });
+          useSessionStore.persist.clearStorage();
+        },
+      },
+    }),
+    { 
+      name: 'session-storage',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({ token: state.token, isAuth: state.isAuth })
+    }
+  )
 );
-
-export const setSession = (data: Partial<SessionState>) => 
-    useSessionStore.setState((state) => ({ ...state, ...data }));

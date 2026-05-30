@@ -1,11 +1,15 @@
-import { useUser } from '@/entities/session';
+import { useIsAuth } from '@/entities/session';
+import { useCurrentUser } from '@/entities/user';
 import { Divider, Surface } from '@/shared/ui';
 import { Wallet } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const SidebarUser = () => {
-  const user = useUser();
-  if (!user) return null;
+  const isAuth = useIsAuth();
+  const { data: user, isLoading } = useCurrentUser(isAuth);
+
+  if (isLoading) return <div>Загрузка...</div>;
+  if (!user) return null; 
   const { t } = useTranslation();
 
   return (
