@@ -1,31 +1,33 @@
 import './unlinkAccount.scss';
 import { useState } from 'react';
 import { useTranslation } from "react-i18next";
-import { sessionActions, useSessionLoading } from '@/entities/session';
 import { Button, Modal } from "@/shared/ui";
+import { useUnlinkAccount } from '@/entities/user'; 
 import type { UnlinkAccountProps } from '../model/types';
 
 const UnlinkAccount = ({ provider }: UnlinkAccountProps) => {
     const { t } = useTranslation();
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const isLoading = useSessionLoading();
+    
+    const { mutate: unlinkAccount, isPending } = useUnlinkAccount();
 
-    const toggleModal = () => !isLoading && setIsModalOpen(!isModalOpen);
+    const toggleModal = () => !isPending && setIsModalOpen(!isModalOpen);
 
-    const handleUnlink = async () => {
-        try {
-            await sessionActions.unlinkAccount(provider);
-            setIsModalOpen(false);
-        } catch (e) {
-            console.error(e);
-        }
+    const handleUnlink = () => {
+        unlinkAccount(provider, {
+            onSuccess: () => {
+                setIsModalOpen(false);
+            }
+        });
     };
+
     return (
         <>
             <Button
                 variant="secondary"
                 onClick={toggleModal}
                 className="unlink-trigger-btn"
+                disabled={isPending}
             >
                 {t('shared.remove')}
             </Button>
@@ -45,24 +47,27 @@ const UnlinkAccount = ({ provider }: UnlinkAccountProps) => {
                     </div>
                     <div className="unlink-card__body">
                         <p className="unlink-card__description">
-                            {t('connector.confirmDescription', { provider: provider.charAt(0).toUpperCase() + provider.slice(1) })}
+                            {t('connector.confirmDescription', { 
+                                provider: provider.charAt(0).toUpperCase() + provider.slice(1) 
+                            })}
                         </p>
                     </div>
                     <div className="unlink-card__footer">
                         <Button
                             variant="secondary"
                             onClick={toggleModal}
-                            disabled={isLoading}
+                            disabled={isPending}
                             className="unlink-card__btn"
                         >
                             {t('shared.cancel')}
                         </Button>
                         <Button
                             onClick={handleUnlink}
-                            disabled={isLoading}
+                            disabled={isPending}
+                            isLoading={isPending} 
                             className="unlink-card__btn unlink-card__btn--confirm"
                         >
-                            {isLoading ? t('shared.loading') : t('shared.confirmRemove')}
+                            {isPending ? t('shared.loading') : t('shared.confirmRemove')}
                         </Button>
                     </div>
                 </div>

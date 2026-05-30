@@ -1,10 +1,7 @@
-import { useSessionStore } from './model/session.store';
+export { useIsAuth, useAuthStep, useAuthEmail, sessionActions } from './model/session.selectors';
+export { useSessionStore } from './model/session.store';
+export type { AuthStep } from './model/types';
 
-export { useSessionStore };
-export { sessionActions } from './model/session.actions';
+export { useSendOtpMutation, useVerifyOtpMutation } from './model/session.mutations';
 
-export const useIsAuth = () => useSessionStore((s) => s.isAuth);
-export const useSessionLoading = () => useSessionStore((s) => s.isLoading);
-export const useUser = () => useSessionStore((s) => s.user);
-
-export type { SessionState } from './model/types';
+export const useSessionLoading = () => false;

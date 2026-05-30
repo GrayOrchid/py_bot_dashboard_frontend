@@ -1,45 +1,45 @@
 import './AuthByEmail.scss';
 import { useRef } from 'react';
-import { sessionActions, useSessionLoading } from "@/entities/session";
+import { useTranslation } from 'react-i18next';
+import { useSendOtpMutation } from "@/entities/session"; 
 import { useHotkeys, useInput } from "@/shared/lib/hooks";
 import { Input, Button } from "@/shared/ui";
-import { useTranslation } from 'react-i18next';
 
 const AuthByEmail = () => {
-    const { t } = useTranslation();
-
+    const { t, i18n } = useTranslation();
     const emailField = useInput('', { isEmpty: true, isEmail: true });
-    const isLoading = useSessionLoading();
     const submitRef = useRef<HTMLButtonElement>(null);
+
+    const { mutate: sendOtp, isPending } = useSendOtpMutation();
 
     useHotkeys([
         { key: 'Enter', ref: submitRef },
-    ], !isLoading);
+    ], !isPending);
 
-
-    const handleSendCode = async () => {
-        if (emailField.isValid) {
-            await sessionActions.requestLoginCode(emailField.value);
+    const handleSendCode = () => {
+        if (emailField.isValid && !isPending) {
+            sendOtp({ 
+                email: emailField.value, 
+                lang: i18n.language || 'en' 
+            });
         }
     };
 
     return (
-        <div
-            className="auth-by-email"
-        >
+        <div className="auth-by-email">
             <Input
                 label={t('input.EMail')}
                 placeholder="example@mail.com"
                 hookProps={emailField}
-                disabled={isLoading}
+                disabled={isPending}
                 type="email"
             />
             <Button
                 ref={submitRef}
                 variant="primary"
                 onClick={handleSendCode}
-                isLoading={isLoading}
-                disabled={!emailField.isValid}
+                isLoading={isPending} 
+                disabled={!emailField.isValid || isPending}
                 className="auth-by-email__button"
             >
                 {t('form.getCode')}

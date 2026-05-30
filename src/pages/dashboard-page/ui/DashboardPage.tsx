@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { sessionActions, useIsAuth } from '@/entities/session';
 import { DiscordConnector} from '@/widgets';
 import './dashboardPage.scss';
 import { DashboardWelcome } from './components';
@@ -8,14 +6,6 @@ import { Divider } from '@/shared/ui';
 
 export const DashboardPage = () => {
   const { t } = useTranslation();
-  const isAuth = useIsAuth();
-
-  useEffect(() => {
-    if (isAuth) {
-      sessionActions.refreshUser();
-    }
-  }, [isAuth]);
-
   return (
     <div className="dashboard-layout">
       <main className="dashboard-main">

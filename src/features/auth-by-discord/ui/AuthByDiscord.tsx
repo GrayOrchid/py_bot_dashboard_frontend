@@ -1,11 +1,19 @@
-import { BrandBtn } from "@/shared/ui";
 import { MessageCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useQueryClient } from "@tanstack/react-query"; 
+import { BrandBtn } from "@/shared/ui";
+import { USER_QUERY_KEY } from "@/entities/user"; 
 import { useDiscordAuth } from "../lib/useDiscordAuth";
 
- const AuthByDiscord = () => {
-    const { login, isLoading } = useDiscordAuth();
+const AuthByDiscord = () => {
     const { t } = useTranslation();
+    const queryClient = useQueryClient();
+
+    const { login, isLoading } = useDiscordAuth({
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: USER_QUERY_KEY });
+        }
+    });
 
     return (
         <BrandBtn
@@ -19,4 +27,4 @@ import { useDiscordAuth } from "../lib/useDiscordAuth";
     );
 };
 
-export default AuthByDiscord
+export default AuthByDiscord;
